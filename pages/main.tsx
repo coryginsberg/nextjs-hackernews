@@ -6,7 +6,7 @@ import * as DateHelper from "./helper/dateHelper";
 
 type Props = {};
 
-export default function Main({}: Props) {
+export default function Main({}: Props): JSX.Element {
   const [topResults, setTopResults] = useState<PostInfo[]>([]);
   const [isLoading, setLoading] = useState(false);
 
@@ -37,7 +37,7 @@ export default function Main({}: Props) {
       {topResults.map((result, key) => (
         <div key={result.id}>
           <h2>
-            {key + 1}. {result.title}
+            {key + 1}. <a href={result.url}>{result.title}</a>
           </h2>
           {subhead(result)}
         </div>

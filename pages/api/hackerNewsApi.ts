@@ -1,6 +1,6 @@
 const BASE_URL = "https://hacker-news.firebaseio.com/v0";
 
-export interface PostInfo {
+export type PostInfo = {
   by: string;
   descendants: number;
   id: number;
@@ -10,7 +10,10 @@ export interface PostInfo {
   time: number;
   title: string;
   type: string;
-}
+  url: string;
+  deleted: boolean;
+  dead: boolean;
+};
 
 const awaitJson = (responses: any[]) =>
   Promise.all(
