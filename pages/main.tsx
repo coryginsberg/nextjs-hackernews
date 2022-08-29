@@ -1,7 +1,8 @@
-import React, { Component, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../styles/Main.module.css";
 import { PostInfo } from "./api/hackerNewsApi";
 import * as HackerNewsApi from "./api/hackerNewsApi";
+import * as DateHelper from "./helper/dateHelper";
 
 type Props = {};
 
@@ -22,7 +23,7 @@ export default function Main({}: Props) {
   if (!topResults) return <p>No data</p>;
 
   const subhead = (result: PostInfo) => {
-    const time = calculateHowLongAgo(result.time);
+    const time = DateHelper.calculateHowLongAgo(result.time);
     return (
       <h4>
         {result.score} points by {result.by} {time} ago | {result.descendants}{" "}
@@ -31,30 +32,11 @@ export default function Main({}: Props) {
     );
   };
 
-  const calculateHowLongAgo = (time: number) => {
-    const date = new Date(time * 1000);
-    const currentTime = new Date();
-    console.warn(date);
-    if (currentTime.getDay() - date.getDay() > 0) {
-      return Math.floor(currentTime.getDay() - date.getDay()) + " days";
-    } else if (currentTime.getHours() - date.getHours() > 0) {
-      return Math.floor(currentTime.getHours() - date.getHours()) + " hours";
-    } else if (currentTime.getMinutes() - date.getMinutes() > 0) {
-      return (
-        Math.floor(currentTime.getMinutes() - date.getMinutes()) + " minutes"
-      );
-    } else {
-      return (
-        Math.floor(currentTime.getSeconds() - date.getSeconds()) + " seconds"
-      );
-    }
-  };
-
   return (
     <div className={styles.root}>
       {topResults.map((result, key) => (
         <div key={result.id}>
-          <h2 className="title">
+          <h2>
             {key + 1}. {result.title}
           </h2>
           {subhead(result)}
